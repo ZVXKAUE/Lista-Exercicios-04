@@ -1,0 +1,54 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+const int MAX_CHEQUES = 20;
+
+struct Cheque {
+    int numero;
+    float valor;
+    string data;
+    string destino;
+};
+
+int main() {
+    Cheque cheques[MAX_CHEQUES];
+    int quantidade;
+
+    do {
+        cout << "Quantos cheques foram utilizados (máximo 20)? ";
+        cin >> quantidade;
+        if (quantidade < 1 || quantidade > MAX_CHEQUES) {
+            cout << "Quantidade inválida. Tente novamente.\n";
+        }
+    } while (quantidade < 1 || quantidade > MAX_CHEQUES);
+
+    for (int i = 0; i < quantidade; ++i) {
+        cout << "\nCheque " << i + 1 << ":\n";
+
+        cout << "Número do cheque: ";
+        cin >> cheques[i].numero;
+        cout << "Valor: R$ ";
+        cin >> cheques[i].valor;
+        cin.ignore(); // limpa buffer antes de ler strings
+
+        cout << "Data (dd/mm/aaaa): ";
+        getline(cin, cheques[i].data);
+
+        cout << "Destino: ";
+        getline(cin, cheques[i].destino);
+    }
+
+    cout << "\n======= RELATÓRIO DOS CHEQUES =======\n";
+    for (int i = 0; i < quantidade; ++i) {
+        cout << "Cheque " << i + 1 << ":\n";
+        cout << "Número: " << cheques[i].numero << endl;
+        cout << "Valor: R$ " << cheques[i].valor << endl;
+        cout << "Data: " << cheques[i].data << endl;
+        cout << "Destino: " << cheques[i].destino << endl;
+        cout << "-----------------------------\n";
+    }
+
+    return 0;
+}
