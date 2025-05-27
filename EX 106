@@ -1,0 +1,84 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+const int MAX_PRODUTOS = 20;
+
+struct Produto {
+    int codigo;
+    string nome;
+    int quantidade;
+    float valorCompra;
+    float valorVenda;
+};
+
+int main() {
+    Produto produtos[MAX_PRODUTOS];
+
+    cout << "Cadastro de 20 produtos:\n";
+    for (int i = 0; i < MAX_PRODUTOS; ++i) {
+        cout << "\nProduto " << i + 1 << ":\n";
+        cout << "Código: ";
+        cin >> produtos[i].codigo;
+        cin.ignore();  // Limpar buffer
+        cout << "Nome: ";
+        getline(cin, produtos[i].nome);
+        cout << "Quantidade: ";
+        cin >> produtos[i].quantidade;
+        cout << "Valor de compra: R$ ";
+        cin >> produtos[i].valorCompra;
+        cout << "Valor de venda: R$ ";
+        cin >> produtos[i].valorVenda;
+    }
+
+    int opcao;
+    do {
+        cout << "\nMenu de opções:\n";
+        cout << "1 - Exibir todos os produtos\n";
+        cout << "2 - Buscar produto por código\n";
+        cout << "0 - Sair\n";
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+
+        if (opcao == 1) {
+            cout << "\nLista de todos os produtos:\n";
+            for (int i = 0; i < MAX_PRODUTOS; ++i) {
+                cout << "\nProduto " << i + 1 << ":\n";
+                cout << "Código: " << produtos[i].codigo << endl;
+                cout << "Nome: " << produtos[i].nome << endl;
+                cout << "Quantidade: " << produtos[i].quantidade << endl;
+                cout << "Valor de Compra: R$ " << produtos[i].valorCompra << endl;
+                cout << "Valor de Venda: R$ " << produtos[i].valorVenda << endl;
+            }
+        } else if (opcao == 2) {
+            int codigoBusca;
+            bool encontrado = false;
+            cout << "Digite o código do produto: ";
+            cin >> codigoBusca;
+
+            for (int i = 0; i < MAX_PRODUTOS; ++i) {
+                if (produtos[i].codigo == codigoBusca) {
+                    cout << "\nProduto encontrado:\n";
+                    cout << "Código: " << produtos[i].codigo << endl;
+                    cout << "Nome: " << produtos[i].nome << endl;
+                    cout << "Quantidade: " << produtos[i].quantidade << endl;
+                    cout << "Valor de Compra: R$ " << produtos[i].valorCompra << endl;
+                    cout << "Valor de Venda: R$ " << produtos[i].valorVenda << endl;
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                cout << "Produto com código " << codigoBusca << " não encontrado.\n";
+            }
+        } else if (opcao != 0) {
+            cout << "Opção inválida!\n";
+        }
+
+    } while (opcao != 0);
+
+    cout << "Programa encerrado.\n";
+    return 0;
+}
