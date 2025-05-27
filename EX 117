@@ -1,0 +1,159 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int MAX_CLIENTES = 50;
+
+struct Cliente {
+    string nome;
+    int milhagem = -1;  // Inicializa com -1 para indicar milhagem não cadastrada
+};
+
+void cadastrarClientes(Cliente clientes[], int &qtd) {
+    if (qtd >= MAX_CLIENTES) {
+        cout << "Capacidade máxima atingida. Não é possível cadastrar mais clientes.\n";
+        return;
+    }
+
+    int qtdCadastrar;
+    cout << "Quantos clientes deseja cadastrar? (max " << (MAX_CLIENTES - qtd) << "): ";
+    cin >> qtdCadastrar;
+    cin.ignore();
+
+    if (qtdCadastrar < 1 || qtdCadastrar > (MAX_CLIENTES - qtd)) {
+        cout << "Quantidade inválida.\n";
+        return;
+    }
+
+    for (int i = qtd; i < qtd + qtdCadastrar; ++i) {
+        cout << "Cliente " << i + 1 << " - Nome: ";
+        getline(cin, clientes[i].nome);
+        clientes[i].milhagem = -1; // garante que milhagem está indefinida inicialmente
+    }
+    qtd += qtdCadastrar;
+}
+
+void cadastrarMilhagem(Cliente clientes[], int qtd) {
+    if (qtd == 0) {
+        cout << "Nenhum cliente cadastrado ainda.\n";
+        return;
+    }
+    string nomeBusca;
+    cout << "Digite o nome do cliente para cadastrar/atualizar milhagem: ";
+    cin.ignore();
+    getline(cin, nomeBusca);
+
+    bool encontrado = false;
+    for (int i = 0; i < qtd; ++i) {
+        if (clientes[i].nome == nomeBusca) {
+            cout << "Digite a milhagem do cliente " << clientes[i].nome << ": ";
+            cin >> clientes[i].milhagem;
+            cin.ignore();
+            cout << "Milhagem atualizada com sucesso.\n";
+            encontrado = true;
+            break;
+        }
+    }
+    if (!encontrado) {
+        cout << "Cliente não encontrado.\n";
+    }
+}
+
+void listarClientes(const Cliente clientes[], int qtd) {
+    if (qtd == 0) {
+        cout << "Nenhum cliente cadastrado.\n";
+        return;
+    }
+    cout << "\nLista de clientes e suas milhagens:\n";
+    for (int i = 0; i < qtd; ++i) {
+        cout << "Nome: " << clientes[i].nome 
+             << " | Milhagem: ";
+        if (clientes[i].milhagem >= 0)
+            cout << clientes[i].milhagem << endl;
+        else
+            cout << "não cadastrada\n";
+    }
+}
+
+void exibirMaiorEMenorMilhagem(const Cliente clientes[], int qtd) {
+    if (qtd == 0) {
+        cout << "Nenhum cliente cadastrado.\n";
+        return;
+    }
+
+    int maior = -1, menor = -1;
+    for (int i = 0; i < qtd; ++i) {
+        if (clientes[i].milhagem < 0) continue; // pula se milhagem não cadastrada
+
+        if (maior == -1 || clientes[i].milhagem > maior) {
+            maior = clientes[i].milhagem;
+        }
+        if (menor == -1 || clientes[i].milhagem < menor) {
+            menor = clientes[i].milhagem;
+        }
+    }
+
+    if (maior == -1) {
+        cout << "Nenhuma milhagem cadastrada ainda.\n";
+        return;
+    }
+
+    cout << "\nClientes com maior milhagem (" << maior << "):\n";
+    for (int i = 0; i < qtd; ++i) {
+        if (clientes[i].milhagem == maior) {
+            cout << clientes[i].nome << endl;
+        }
+    }
+
+    cout << "\nClientes com menor milhagem (" << menor << "):\n";
+    for (int i = 0; i < qtd; ++i) {
+        if (clientes[i].milhagem == menor) {
+            cout << clientes[i].nome << endl;
+        }
+    }
+}
+
+int main() {
+    Cliente clientes[MAX_CLIENTES];
+    int quantidadeClientes = 0;
+    int opcao;
+
+    do {
+        cout << "\n===== MENU =====\n";
+        cout << "1 - Cadastrar dados do cliente\n";
+        cout << "2 - Cadastrar milhagem do cliente\n";
+        cout << "3 - Listar todos os clientes e milhagem\n";
+        cout << "4 - Exibir nomes dos clientes com maior e menor milhagem\n";
+        cout << "5 - Sair\n";
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+        cin.ignore();
+
+        switch (opcao) {
+            case 1:
+                cadastrarClientes(clientes, quantidadeClientes);
+                break;
+
+            case 2:
+                cadastrarMilhagem(clientes, quantidadeClientes);
+                break;
+
+            case 3:
+                listarClientes(clientes, quantidadeClientes);
+                break;
+
+            case 4:
+                exibirMaiorEMenorMilhagem(clientes, quantidadeClientes);
+                break;
+
+            case 5:
+                cout << "Saindo...\n";
+                break;
+
+            default:
+                cout << "Opção inválida. Tente novamente.\n";
+        }
+    } while (opcao != 5);
+
+    return 0;
+}
