@@ -1,0 +1,106 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int TAM = 20;
+
+struct Candidato {
+    string nome;
+    float nota;
+    int idade;
+};
+
+int main() {
+    Candidato candidatos[TAM];
+    bool dadosLidos = false;
+    int opcao;
+
+    do {
+        cout << "\n===== MENU DE OPÇÕES =====\n";
+        cout << "1 - Ler nomes, notas e idades dos 20 candidatos\n";
+        cout << "2 - Exibir média geral das notas\n";
+        cout << "3 - Exibir lista de candidatos (nome e nota)\n";
+        cout << "4 - Buscar candidato por nome (exibe nome e idade)\n";
+        cout << "0 - Sair\n";
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+        cin.ignore(); // Limpar o buffer após leitura de número
+
+        switch (opcao) {
+            case 1:
+                cout << "\nDigite os dados dos 20 candidatos:\n";
+                for (int i = 0; i < TAM; ++i) {
+                    cout << "\nCandidato " << i + 1 << ":\n";
+                    cout << "Nome: ";
+                    getline(cin, candidatos[i].nome);
+                    cout << "Nota: ";
+                    cin >> candidatos[i].nota;
+                    cout << "Idade: ";
+                    cin >> candidatos[i].idade;
+                    cin.ignore(); // Limpa o buffer antes de ler o próximo nome
+                }
+                dadosLidos = true;
+                break;
+
+            case 2:
+                if (!dadosLidos) {
+                    cout << "Você precisa primeiro ler os dados dos candidatos (opção 1).\n";
+                } else {
+                    float soma = 0;
+                    for (int i = 0; i < TAM; ++i) {
+                        soma += candidatos[i].nota;
+                    }
+                    float media = soma / TAM;
+                    cout << "Média geral das notas: " << media << endl;
+                }
+                break;
+
+            case 3:
+                if (!dadosLidos) {
+                    cout << "Você precisa primeiro ler os dados dos candidatos (opção 1).\n";
+                } else {
+                    cout << "\nLista de candidatos (nome e nota):\n";
+                    for (int i = 0; i < TAM; ++i) {
+                        cout << "Nome: " << candidatos[i].nome
+                             << " | Nota: " << candidatos[i].nota << endl;
+                    }
+                }
+                break;
+
+            case 4:
+                if (!dadosLidos) {
+                    cout << "Você precisa primeiro ler os dados dos candidatos (opção 1).\n";
+                } else {
+                    string nomeBusca;
+                    bool encontrado = false;
+                    cout << "Digite o nome do candidato a buscar: ";
+                    getline(cin, nomeBusca);
+
+                    for (int i = 0; i < TAM; ++i) {
+                        if (candidatos[i].nome == nomeBusca) {
+                            cout << "Candidato encontrado:\n";
+                            cout << "Nome: " << candidatos[i].nome << endl;
+                            cout << "Idade: " << candidatos[i].idade << endl;
+                            encontrado = true;
+                            break;
+                        }
+                    }
+                    if (!encontrado) {
+                        cout << "Candidato não encontrado.\n";
+                    }
+                }
+                break;
+
+            case 0:
+                cout << "Encerrando o programa.\n";
+                break;
+
+            default:
+                cout << "Opção inválida. Tente novamente.\n";
+                break;
+        }
+
+    } while (opcao != 0);
+
+    return 0;
+}
