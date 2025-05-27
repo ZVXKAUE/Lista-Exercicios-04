@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+const int TAM = 15;
+
+struct Pessoa {
+    int codigo;
+    float salario;
+};
+
+void inserir(Pessoa pessoas[], int tamanho) {
+    cout << "Inserir dados de " << tamanho << " pessoas:\n";
+    for (int i = 0; i < tamanho; ++i) {
+        cout << "Pessoa " << i+1 << ":\n";
+        cout << "Código: ";
+        cin >> pessoas[i].codigo;
+        cout << "Salário: ";
+        cin >> pessoas[i].salario;
+    }
+}
+
+void ordenar(Pessoa pessoas[], int tamanho) {
+    for (int i = 0; i < tamanho - 1; ++i) {
+        for (int j = i + 1; j < tamanho; ++j) {
+            if (pessoas[j].salario > pessoas[i].salario) {
+                Pessoa temp = pessoas[i];
+                pessoas[i] = pessoas[j];
+                pessoas[j] = temp;
+            }
+        }
+    }
+    cout << "Dados ordenados pelo salário (decrescente).\n";
+}
+
+void listar(const Pessoa pessoas[], int tamanho) {
+    cout << "\nLista de pessoas:\n";
+    cout << "Código\tSalário\n";
+    for (int i = 0; i < tamanho; ++i) {
+        cout << pessoas[i].codigo << "\t" << pessoas[i].salario << endl;
+    }
+}
+
+void procurar(const Pessoa pessoas[], int tamanho) {
+    int codBusca;
+    cout << "Digite o código para procurar: ";
+    cin >> codBusca;
+
+    bool encontrado = false;
+    for (int i = 0; i < tamanho; ++i) {
+        if (pessoas[i].codigo == codBusca) {
+            cout << "Pessoa encontrada:\n";
