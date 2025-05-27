@@ -1,0 +1,39 @@
+#include <iostream>
+#include <algorithm> // Para sort
+using namespace std;
+
+const int TAM = 25;
+const int TAM_V = 50;
+
+int main() {
+    int A[TAM], B[TAM], V[TAM_V];
+
+    cout << "Digite 25 números inteiros para o vetor A:\n";
+    for (int i = 0; i < TAM; ++i) {
+        cout << "A[" << i << "]: ";
+        cin >> A[i];
+    }
+
+    cout << "\nDigite 25 números inteiros para o vetor B:\n";
+    for (int i = 0; i < TAM; ++i) {
+        cout << "B[" << i << "]: ";
+        cin >> B[i];
+    }
+
+    // Intercalação A[0], B[0], A[1], B[1], ..., formando V
+    int idxV = 0;
+    for (int i = 0; i < TAM; ++i) {
+        V[idxV++] = A[i];
+        V[idxV++] = B[i];
+    }
+
+    sort(V, V + TAM_V, greater<int>());
+
+    cout << "\nVetor V (intercalado e ordenado em ordem decrescente):\n";
+    for (int i = 0; i < TAM_V; ++i) {
+        cout << V[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
