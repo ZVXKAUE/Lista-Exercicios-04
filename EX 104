@@ -1,0 +1,19 @@
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string nomes[10];
+
+    std::cout << "Digite 10 nomes:\n";
+    for (int i = 0; i < 10; ++i) {
+        std::cout << "Nome " << i + 1 << ": ";
+        std::getline(std::cin, nomes[i]);
+    }
+
+    std::cout << "\nLista de nomes:\n";
+    for (int i = 0; i < 10; ++i) {
+        std::cout << i + 1 << ". " << nomes[i] << std::endl;
+    }
+
+    return 0;
+}
