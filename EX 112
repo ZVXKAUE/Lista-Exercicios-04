@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cstdlib>   // rand(), srand()
+#include <ctime>     // time()
+using namespace std;
+
+const int TAM = 100;
+
+int main() {
+    int vetor[TAM];
+    int soma = 0;
+    int iguaisA30 = 0, maioresQueMedia = 0, iguaisAMedia = 0;
+
+    srand(time(0));
+
+    cout << "Vetor gerado:\n";
+    for (int i = 0; i < TAM; ++i) {
+        vetor[i] = rand() % 101; // números de 0 a 100
+        cout << vetor[i] << " ";
+        soma += vetor[i];
+        if (vetor[i] == 30) ++iguaisA30;
+    }
+
+    float media = soma / (float)TAM;
+
+    for (int i = 0; i < TAM; ++i) {
+        if (vetor[i] > media)
+            ++maioresQueMedia;
+        else if (vetor[i] == (int)media)
+            ++iguaisAMedia;
+    }
+
+    cout << "\n\n===== Resultados =====\n";
+    cout << "Média dos valores: " << media << endl;
+    cout << "Quantidade de números iguais a 30: " << iguaisA30 << endl;
+    cout << "Quantidade de números maiores que a média: " << maioresQueMedia << endl;
+    cout << "Quantidade de números iguais à média: " << iguaisAMedia << endl;
+
+    return 0;
+}
