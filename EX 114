@@ -1,0 +1,117 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int TAM = 50;
+
+struct Aluno {
+    string nome;
+    float nota1 = -1;  // inicializamos com -1 para identificar notas ainda não digitadas
+    float nota2 = -1;
+    float media = 0;
+};
+
+void calcularMedia(Aluno alunos[], int tamanho) {
+    for (int i = 0; i < tamanho; ++i) {
+        if (alunos[i].nota1 >= 0 && alunos[i].nota2 >= 0) {
+            alunos[i].media = (alunos[i].nota1 * 3 + alunos[i].nota2 * 7) / 10.0;
+        } else {
+            alunos[i].media = 0; // ou um valor indicativo que não calculou
+        }
+    }
+    cout << "Média calculada para todos os alunos.\n";
+}
+
+void exibirInformacoes(const Aluno alunos[], int tamanho) {
+    cout << "\n===== Lista de Alunos =====\n";
+    for (int i = 0; i < tamanho; ++i) {
+        cout << "Aluno " << i+1 << ":\n";
+        cout << "Nome: " << alunos[i].nome << endl;
+        cout << "Nota 1: " << (alunos[i].nota1 >= 0 ? to_string(alunos[i].nota1) : "não informada") << endl;
+        cout << "Nota 2: " << (alunos[i].nota2 >= 0 ? to_string(alunos[i].nota2) : "não informada") << endl;
+        cout << "Média: " << alunos[i].media << endl;
+        cout << "--------------------------\n";
+    }
+}
+
+int main() {
+    Aluno alunos[TAM];
+    int opcao;
+    bool nomesDigitados = false;
+
+    do {
+        cout << "\n===== MENU =====\n";
+        cout << "1 - Digitar nomes\n";
+        cout << "2 - Digitar 1ª nota\n";
+        cout << "3 - Digitar 2ª nota\n";
+        cout << "4 - Calcular média\n";
+        cout << "5 - Exibir informações\n";
+        cout << "6 - Sair\n";
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+        cin.ignore(); // limpar buffer
+
+        switch(opcao) {
+            case 1:
+                cout << "Digite os nomes dos 50 alunos:\n";
+                for (int i = 0; i < TAM; ++i) {
+                    cout << "Aluno " << i+1 << ": ";
+                    getline(cin, alunos[i].nome);
+                }
+                nomesDigitados = true;
+                break;
+
+            case 2:
+                if (!nomesDigitados) {
+                    cout << "Primeiro digite os nomes (opção 1).\n";
+                    break;
+                }
+                cout << "Digite a 1ª nota dos alunos:\n";
+                for (int i = 0; i < TAM; ++i) {
+                    cout << alunos[i].nome << ": ";
+                    cin >> alunos[i].nota1;
+                }
+                cin.ignore();
+                break;
+
+            case 3:
+                if (!nomesDigitados) {
+                    cout << "Primeiro digite os nomes (opção 1).\n";
+                    break;
+                }
+                cout << "Digite a 2ª nota dos alunos:\n";
+                for (int i = 0; i < TAM; ++i) {
+                    cout << alunos[i].nome << ": ";
+                    cin >> alunos[i].nota2;
+                }
+                cin.ignore();
+                break;
+
+            case 4:
+                if (!nomesDigitados) {
+                    cout << "Primeiro digite os nomes (opção 1).\n";
+                    break;
+                }
+                calcularMedia(alunos, TAM);
+                break;
+
+            case 5:
+                if (!nomesDigitados) {
+                    cout << "Primeiro digite os nomes (opção 1).\n";
+                    break;
+                }
+                exibirInformacoes(alunos, TAM);
+                break;
+
+            case 6:
+                cout << "Saindo do programa...\n";
+                break;
+
+            default:
+                cout << "Opção inválida. Tente novamente.\n";
+        }
+
+    } while (opcao != 6);
+
+    return 0;
+}
