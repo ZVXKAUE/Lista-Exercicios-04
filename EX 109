@@ -1,0 +1,37 @@
+#include <iostream>
+
+using namespace std;
+
+const int TAM = 100;
+
+int main() {
+    int vetor[TAM];
+    int maior, menor, soma = 0, qtdPares = 0;
+
+    cout << "Digite 100 números inteiros:\n";
+    for (int i = 0; i < TAM; ++i) {
+        cout << "Elemento [" << i << "]: ";
+        cin >> vetor[i];
+
+        if (i == 0) {
+            maior = menor = vetor[i];
+        } else {
+            if (vetor[i] > maior) maior = vetor[i];
+            if (vetor[i] < menor) menor = vetor[i];
+        }
+
+        soma += vetor[i];
+        if (vetor[i] % 2 == 0) ++qtdPares;
+    }
+
+    float media = soma / (float)TAM;
+    float percentualPares = (qtdPares / (float)TAM) * 100;
+
+    cout << "\n========= RESULTADOS =========\n";
+    cout << "Maior valor: " << maior << endl;
+    cout << "Menor valor: " << menor << endl;
+    cout << "Percentual de pares: " << percentualPares << "%\n";
+    cout << "Média dos elementos: " << media << endl;
+
+    return 0;
+}
