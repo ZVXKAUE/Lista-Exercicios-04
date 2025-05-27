@@ -1,0 +1,35 @@
+#include <iostream>
+
+int main() {
+    const int total = 10;
+    float precoCompra[total], precoVenda[total];
+    int lucroMenor10 = 0, lucroEntre10e20 = 0, lucroMaior20 = 0;
+
+    for (int i = 0; i < total; ++i) {
+        std::cout << "Mercadoria " << i + 1 << ":\n";
+        std::cout << "Preço de compra: R$ ";
+        std::cin >> precoCompra[i];
+        std::cout << "Preço de venda: R$ ";
+        std::cin >> precoVenda[i];
+    }
+
+    for (int i = 0; i < total; ++i) {
+        float lucro = precoVenda[i] - precoCompra[i];
+        float percentualLucro = (lucro / precoCompra[i]) * 100;
+
+        if (percentualLucro < 10) {
+            ++lucroMenor10;
+        } else if (percentualLucro <= 20) {
+            ++lucroEntre10e20;
+        } else {
+            ++lucroMaior20;
+        }
+    }
+
+    std::cout << "\nRelatório de Lucros:\n";
+    std::cout << "Mercadorias com lucro < 10%: " << lucroMenor10 << "\n";
+    std::cout << "Mercadorias com 10% <= lucro <= 20%: " << lucroEntre10e20 << "\n";
+    std::cout << "Mercadorias com lucro > 20%: " << lucroMaior20 << "\n";
+
+    return 0;
+}
